@@ -32,10 +32,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.DirectX.Direct3DX, Version=1.0.2909.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Windows\Microsoft.NET\DirectX for Managed Code\1.0.2911.0\Microsoft.DirectX.Direct3DX.dll</HintPath>
-    </Reference>
+    <Reference Include="Microsoft.VisualC" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -50,9 +47,9 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="ProjectSRC\Controller\GUIController.cs" />
-    <Compile Include="ProjectSRC\Controller\GUIController.KeyControl.cs" />
     <Compile Include="ProjectSRC\Controller\GUIController.SimpleKBModelChange.cs" />
     <Compile Include="ProjectSRC\Controller\GUIController.SimpleProgramModelChange.cs" />
+    <Compile Include="ProjectSRC\Controller\Keybinder.cs" />
     <Compile Include="ProjectSRC\Controller\Serializer.cs" />
     <Compile Include="ProjectSRC\GUI\ConfigureKey.cs">
       <SubType>Form</SubType>
@@ -82,6 +79,7 @@
     <Compile Include="ProjectSRC\Model\GlobalHotkey.cs" />
     <Compile Include="ProjectSRC\Model\GUIModel.cs" />
     <Compile Include="ProjectSRC\Model\Keybind.cs" />
+    <Compile Include="ProjectSRC\Model\ModCollection.cs" />
     <Compile Include="ProjectSRC\Model\ProgramProfile.cs" />
     <Compile Include="ProjectSRC\Model\SelectProcess\RunningProcess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

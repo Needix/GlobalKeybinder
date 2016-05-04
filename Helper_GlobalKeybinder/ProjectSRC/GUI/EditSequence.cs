@@ -1,27 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows.Forms;
 using Helper_GlobalKeybinder.ProjectSRC.Model;
 
 namespace Helper_GlobalKeybinder.ProjectSRC.GUI {
     public partial class EditSequence : Form {
-        public List<GlobalHotkey> Hotkeys { get; private set; } 
+        public List<GlobalHotkey> SendKeys { get; private set; } 
         public bool Save;
-
-        public EditSequence() {
+        
+        public EditSequence(OutputSequence selectedKeybind) {
             InitializeComponent();
-            Hotkeys = new List<GlobalHotkey>();
+
+            LoadData(selectedKeybind);
+
+            if(SendKeys == null) SendKeys = new List<GlobalHotkey>();
         }
 
-        //TODO: Add "SendText" option (multiple characters)
+        private void LoadData(OutputSequence sequence) {
+            SendKeys = sequence.Sequence;
+            if (SendKeys == null) return;
+            foreach (GlobalHotkey hotkey in SendKeys) {
+                listBox_keys.Items.Add(hotkey);
+            }
+        }
 
         private void b_moveDown_Click(object sender, EventArgs e) {
             int index = listBox_keys.SelectedIndex;
             if(index == -1 || index >= listBox_keys.Items.Count || index+1 >= listBox_keys.Items.Count) return;
             
-            GlobalHotkey hotkey = Hotkeys[index];
-            Hotkeys.RemoveAt(index);
-            Hotkeys.Insert(index + 1, hotkey);
+            GlobalHotkey hotkey = SendKeys[index];
+            SendKeys.RemoveAt(index);
+            SendKeys.Insert(index + 1, hotkey);
 
             object selChar = listBox_keys.Items[index];
             listBox_keys.Items.RemoveAt(index);
@@ -33,9 +43,9 @@ namespace Helper_GlobalKeybinder.ProjectSRC.GUI {
             int index = listBox_keys.SelectedIndex;
             if(index == -1 || index >= listBox_keys.Items.Count || index == 0 ) return;
             
-            GlobalHotkey hotkey = Hotkeys[index];
-            Hotkeys.RemoveAt(index);
-            Hotkeys.Insert(index - 1, hotkey);
+            GlobalHotkey hotkey = SendKeys[index];
+            SendKeys.RemoveAt(index);
+            SendKeys.Insert(index - 1, hotkey);
 
             object selChar = listBox_keys.Items[index];
             listBox_keys.Items.RemoveAt(index);
@@ -52,7 +62,7 @@ namespace Helper_GlobalKeybinder.ProjectSRC.GUI {
             int index = listBox_keys.SelectedIndex;
             if(index == -1 || index>=listBox_keys.Items.Count) return;
 
-            Hotkeys.RemoveAt(index);
+            SendKeys.RemoveAt(index);
             listBox_keys.Items.RemoveAt(index);
         }
 
@@ -61,16 +71,51 @@ namespace Helper_GlobalKeybinder.ProjectSRC.GUI {
             key.ShowDialog();
             if(!key.Save) return;
 
-            GlobalHotkey hotkey = new GlobalHotkey(GlobalHotkey.CalcModifier(key.Shift, key.Alt, key.Control), key.SelectedChar, GUIView.Instance);
-            Hotkeys.Add(hotkey);
+            GlobalHotkey hotkey = new GlobalHotkey(GlobalHotkey.CalcModifier(key.Shift, key.Alt, key.Control), key.SelectedChar);
+            SendKeys.Add(hotkey);
             listBox_keys.Items.Add(hotkey);
         }
 
         private void b_addText_Click(object sender, EventArgs e) {
-            string text = textBox1.Text;
-            GlobalHotkey hotkey = new GlobalHotkey(text.ToCharArray(), GUIView.Instance);
-            Hotkeys.Add(hotkey);
+            AddText();
+        }
+
+        private void b_addTextWithDelay_Click(object sender, EventArgs e) {
+            AddText(GetDelay());
+        }
+
+        private void AddText(int delay = -1) {
+            string text = tb_addText.Text;
+            Debug.WriteLine("Adding text: "+text+" with delay: "+delay);
+            GlobalHotkey hotkey = new GlobalHotkey(text, delay);
+            SendKeys.Add(hotkey);
             listBox_keys.Items.Add(hotkey);
+        }
+
+        private void b_addDelay_Click(object sender, EventArgs e) {
+            int delay = GetDelay();
+            GlobalHotkey hotkey = new GlobalHotkey(delay);
+            SendKeys.Add(hotkey);
+            listBox_keys.Items.Add(hotkey);
+        }
+
+        private int GetDelay() {
+            try {
+                int delay = Convert.ToInt32(tb_addDelay.Text);
+                if (delay < -1) delay = -1;
+                return delay;
+            }
+            catch (FormatException) {
+                return -1;
+            }
+        }
+
+        private void b_addDelayToSelected_Click(object sender, EventArgs e) {
+            ((GlobalHotkey) listBox_keys.Items[listBox_keys.SelectedIndex]).Delay = GetDelay();
+            listBox_keys.Items.Clear();
+            foreach (GlobalHotkey hotkey in SendKeys) {
+                listBox_keys.Items.Add(hotkey);
+            }
         }
     }
 }

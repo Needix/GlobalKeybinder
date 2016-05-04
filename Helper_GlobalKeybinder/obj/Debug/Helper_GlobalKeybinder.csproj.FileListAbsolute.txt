@@ -9,3 +9,21 @@ r:\eigene dokumente\visual studio 2015\Projects\Helper_GlobalKeybinder\Helper_Gl
 r:\eigene dokumente\visual studio 2015\Projects\Helper_GlobalKeybinder\Helper_GlobalKeybinder\obj\Debug\Helper_GlobalKeybinder.ProjectSRC.GUI.SelectProcess.resources
 r:\eigene dokumente\visual studio 2015\Projects\Helper_GlobalKeybinder\Helper_GlobalKeybinder\obj\Debug\Helper_GlobalKeybinder.ProjectSRC.GUI.ConfigureKey.resources
 r:\eigene dokumente\visual studio 2015\Projects\Helper_GlobalKeybinder\Helper_GlobalKeybinder\obj\Debug\Helper_GlobalKeybinder.ProjectSRC.GUI.EditSequence.resources
+r:\eigene dokumente\visual studio 2015\Projects\Helper_GlobalKeybinder\Helper_GlobalKeybinder\bin\Debug\Microsoft.DirectX.Direct3D.dll
+r:\eigene dokumente\visual studio 2015\Projects\Helper_GlobalKeybinder\Helper_GlobalKeybinder\bin\Debug\Microsoft.DirectX.dll
+r:\eigene dokumente\visual studio 2015\Projects\Helper_GlobalKeybinder\Helper_GlobalKeybinder\bin\Debug\Microsoft.DirectX.Direct3D.xml
+r:\eigene dokumente\visual studio 2015\Projects\Helper_GlobalKeybinder\Helper_GlobalKeybinder\bin\Debug\Microsoft.DirectX.xml
+r:\eigene dokumente\visual studio 2015\Projects\Helper_GlobalKeybinder\Helper_GlobalKeybinder\bin\Debug\SlimDX.dll
+r:\eigene dokumente\visual studio 2015\Projects\Helper_GlobalKeybinder\Helper_GlobalKeybinder\bin\Debug\SlimDX.pdb
+r:\eigene dokumente\visual studio 2015\Projects\Helper_GlobalKeybinder\Helper_GlobalKeybinder\bin\Debug\SlimDX.xml
+R:\Eigene Dokumente\Visual Studio 2015\Projects\1_Helper\Helper_GlobalKeybinder\Helper_GlobalKeybinder\obj\Debug\Custom Windows Forms-Anwendung1.exe
+R:\Eigene Dokumente\Visual Studio 2015\Projects\1_Helper\Helper_GlobalKeybinder\Helper_GlobalKeybinder\obj\Debug\Custom Windows Forms-Anwendung1.pdb
+R:\Eigene Dokumente\Visual Studio 2015\Projects\1_Helper\Helper_GlobalKeybinder\Helper_GlobalKeybinder\bin\Debug\Custom Windows Forms-Anwendung1.exe
+R:\Eigene Dokumente\Visual Studio 2015\Projects\1_Helper\Helper_GlobalKeybinder\Helper_GlobalKeybinder\bin\Debug\Custom Windows Forms-Anwendung1.pdb
+R:\Eigene Dokumente\Visual Studio 2015\Projects\1_Helper\Helper_GlobalKeybinder\Helper_GlobalKeybinder\obj\Debug\Helper_GlobalKeybinder.csprojResolveAssemblyReference.cache
+R:\Eigene Dokumente\Visual Studio 2015\Projects\1_Helper\Helper_GlobalKeybinder\Helper_GlobalKeybinder\obj\Debug\Helper_GlobalKeybinder.ProjectSRC.GUI.ConfigureKey.resources
+R:\Eigene Dokumente\Visual Studio 2015\Projects\1_Helper\Helper_GlobalKeybinder\Helper_GlobalKeybinder\obj\Debug\Helper_GlobalKeybinder.ProjectSRC.GUI.EditSequence.resources
+R:\Eigene Dokumente\Visual Studio 2015\Projects\1_Helper\Helper_GlobalKeybinder\Helper_GlobalKeybinder\obj\Debug\Helper_GlobalKeybinder.ProjectSRC.GUI.GUIView.resources
+R:\Eigene Dokumente\Visual Studio 2015\Projects\1_Helper\Helper_GlobalKeybinder\Helper_GlobalKeybinder\obj\Debug\Helper_GlobalKeybinder.ProjectSRC.GUI.SelectProcess.resources
+R:\Eigene Dokumente\Visual Studio 2015\Projects\1_Helper\Helper_GlobalKeybinder\Helper_GlobalKeybinder\obj\Debug\Helper_GlobalKeybinder.Properties.Resources.resources
+R:\Eigene Dokumente\Visual Studio 2015\Projects\1_Helper\Helper_GlobalKeybinder\Helper_GlobalKeybinder\obj\Debug\Helper_GlobalKeybinder.csproj.GenerateResource.Cache

@@ -17,7 +17,6 @@ namespace Helper_GlobalKeybinder {
 
             GUIView view = new GUIView();
             GUIController controller = new GUIController(view); //Controller is saved in view as reference
-            view.RegisterController(controller);
 
             Application.Run(view);
         }

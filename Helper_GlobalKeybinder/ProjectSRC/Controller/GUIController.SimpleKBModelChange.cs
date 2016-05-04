@@ -29,6 +29,7 @@ namespace Helper_GlobalKeybinder.ProjectSRC.Controller {
         public void KBButtonClick(object sender, EventArgs e) {
             Button b = (Button)sender;
             ProgramProfile curProgramProfile = Model.CurSelectedProgramProfile;
+            if (curProgramProfile == null) return;
             switch(b.Name) {
                 case "b_edit_addNew":
                     Keybind newBind = Model.CreateKeyBindFromData();
@@ -44,8 +45,9 @@ namespace Helper_GlobalKeybinder.ProjectSRC.Controller {
                     curProgramProfile.Keybinds.Remove(deleteBind);
                     Model.CurSelectedKeybind = null;
                     break;
-                case "b_edit_save": //Fix: fix row cant be selected + saving this (curKB should NOT be null!)
+                case "b_edit_save":
                     Keybind curKB = Model.CurSelectedKeybind;
+                    Debug.WriteLine("Trying to save "+curKB);
                     if(curKB == null) return;
                     curKB.Name = Model.CurKBName;
                     curKB.InputSequence = Model.CurKBInput;
@@ -59,8 +61,12 @@ namespace Helper_GlobalKeybinder.ProjectSRC.Controller {
             ListView lv = (ListView)sender;
             ListView.SelectedIndexCollection col = lv.SelectedIndices;
             if(col.Count == 0) return;
+            if (Model.CurSelectedProgramProfile == null) return;
             Model.CurSelectedKeybind = Model.CurSelectedProgramProfile.Keybinds[col[0]];
-            View.UpdateView(Model);
+            Model.CurKBInput = Model.CurSelectedKeybind.InputSequence;
+            Model.CurKBName = Model.CurSelectedKeybind.Name;
+            Model.CurKBOutput = Model.CurSelectedKeybind.OutputSequence;
+            View.UpdateViewKeybindFieldsFromSelectedKeybind(Model);
         }
 
         public void OpenConfigKeyModalDialog(object sender, EventArgs e) {
@@ -69,7 +75,7 @@ namespace Helper_GlobalKeybinder.ProjectSRC.Controller {
                 return;
             }
 
-            ConfigureKey form = new ConfigureKey(); //TODO: Send current data
+            ConfigureKey form = new ConfigureKey();
             form.ShowDialog();
             if(!form.Save) return;
 
@@ -78,21 +84,24 @@ namespace Helper_GlobalKeybinder.ProjectSRC.Controller {
             if(form.Control) mod += Constants.CTRL;
             if(form.Shift) mod += Constants.SHIFT;
 
-            Model.CurKBInput = new GlobalHotkey(mod, form.SelectedChar, View);
-            View.UpdateView(Model);
+            Model.CurKBInput = new GlobalHotkey(mod, form.SelectedChar);
+            View.UpdateViewKeybindFieldsFromModelKeybindFields(Model);
         }
 
         public void OpenConfigSequenceModalDialog(object sender, EventArgs e) {
-            EditSequence dialog = new EditSequence(); //TODO: Send current data
+            OutputSequence seq = new OutputSequence();
+            if (Model.CurSelectedKeybind != null) seq = Model.CurSelectedKeybind.OutputSequence;
+            EditSequence dialog = new EditSequence(seq);
             dialog.ShowDialog();
             if(!dialog.Save) return;
 
-            List<GlobalHotkey> chars = dialog.Hotkeys;
+            List<GlobalHotkey> chars = dialog.SendKeys;
             Model.CurKBOutput = new OutputSequence(chars);
-            View.UpdateView(Model);
+            View.UpdateViewKeybindFieldsFromModelKeybindFields(Model);
         }
 
         public void KB_LV_ItemChecked(object sender, ItemCheckedEventArgs e) {
+            if (Model.CurSelectedKeybind == null) return;
             Model.CurSelectedKeybind.Enabled = e.Item.Checked;
         }
     }

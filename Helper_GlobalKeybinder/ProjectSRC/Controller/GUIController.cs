@@ -6,6 +6,8 @@
 //     Mail:     mailto:needdragon@gmail.com 
 //     Twitter: https://twitter.com/NeedDragon
 
+using System;
+using System.Diagnostics;
 using System.Threading;
 using Helper_GlobalKeybinder.ProjectSRC.GUI;
 using Helper_GlobalKeybinder.ProjectSRC.Model;
@@ -17,18 +19,34 @@ namespace Helper_GlobalKeybinder.ProjectSRC.Controller {
         public Serializer Serializer { get; private set; }
         public GUIModel Model { get; set; }
 
+        private Keybinder Keybinder { get; set; }
+
         public GUIController(GUIView view) {
             Instance = this;
             Serializer = new Serializer(this);
             Model = Serializer.Deserialize();
             if(Model == null) Model = new GUIModel();
-
+            
             View = view;
+            view.RegisterController(this);
             View.UpdateView(Model);
 
-            //_handleHotkeyMessageThread = new Thread(Run);
-            //_handleHotkeyMessageThread.Start();
-            Run();
+            Keybinder = new Keybinder(this);
+            Keybinder.StartHook();
+        }
+        
+        public void PrintAllKeybinds() {
+            foreach (ProgramProfile programProfile in Model.Programs) {
+                Debug.WriteLine("Printing "+programProfile);
+                foreach (Keybind keybind in programProfile.Keybinds) {
+                    Debug.WriteLine(keybind.InputSequence.Key+" / "+keybind.InputSequence.Modifier);
+                    Debug.WriteLine(keybind);
+                }
+            }
+        }
+
+        public void Close() {
+            Keybinder.Close();
         }
     }
 }

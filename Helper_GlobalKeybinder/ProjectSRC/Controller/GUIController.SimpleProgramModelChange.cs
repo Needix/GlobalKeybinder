@@ -23,6 +23,7 @@ namespace Helper_GlobalKeybinder.ProjectSRC.Controller {
                 }
             }
             View.UpdateProgramProfileFields(Model);
+            View.UpdateKeybindListViewItems(Model);
             View.UpdateProgramComboboxSelection(Model);
             //View.UpdateView(Model);
         }
@@ -33,6 +34,7 @@ namespace Helper_GlobalKeybinder.ProjectSRC.Controller {
         /// <param name="e">The arguments</param>
         public void ProgramEnabledChanged(object sender, EventArgs e) {
             //Model.CurExeEnabled = ((CheckBox)sender).Checked;
+            if (Model.CurSelectedProgramProfile == null) return;
             Model.CurSelectedProgramProfile.Enabled = ((CheckBox) sender).Checked;
             //View.UpdateView(Model);
         }
@@ -70,6 +72,11 @@ namespace Helper_GlobalKeybinder.ProjectSRC.Controller {
         public void AddNewProcessConfig(object sender, EventArgs e) {
             if(string.IsNullOrEmpty(Model.CurExeName)) return;
             ProgramProfile prof = Model.CreateProgramFromData();
+
+            foreach (ProgramProfile programProfile in Model.Programs) {
+                if (programProfile.Name == prof.Name) return;
+            }
+
             Model.Programs.Add(prof);
             View.UpdateView(Model);
             Model.CurExeName = prof.Name;
@@ -82,6 +89,7 @@ namespace Helper_GlobalKeybinder.ProjectSRC.Controller {
         /// <param name="sender">The sender that fired this method</param>
         /// <param name="e">The arguments the sender specified</param>
         public void SaveProcessConfig(object sender, EventArgs e) {
+            if (Model.CurSelectedProgramProfile == null) return;
             Model.CurSelectedProgramProfile.Name = Model.CurExeName;
             View.UpdateView(Model);
         }
@@ -91,8 +99,13 @@ namespace Helper_GlobalKeybinder.ProjectSRC.Controller {
         /// <param name="sender">The sender that fired this method</param>
         /// <param name="e">The arguments the sender specified</param>
         public void DeleteProcessConfig(object sender, EventArgs e) {
-            Model.Programs.Remove(Model.CurSelectedProgramProfile);
+            Model.Programs.Remove(Model.CurSelectedProgramProfile); //TODO: Reset all textboxes / data
             View.UpdateView(Model);
+        }
+
+        public void SingleSendChanged(object sender, EventArgs e) {
+            if (Model.CurSelectedProgramProfile == null) return;
+            Model.CurSelectedProgramProfile.SingleSend = ((CheckBox) sender).Checked;
         }
     }
 }

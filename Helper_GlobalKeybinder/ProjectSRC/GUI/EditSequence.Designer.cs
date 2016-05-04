@@ -31,8 +31,13 @@
             this.b_save = new System.Windows.Forms.Button();
             this.b_edit_keyEdit = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.tb_addText = new System.Windows.Forms.TextBox();
             this.b_addText = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.tb_addDelay = new System.Windows.Forms.TextBox();
+            this.b_addDelay = new System.Windows.Forms.Button();
+            this.b_addTextWithDelay = new System.Windows.Forms.Button();
+            this.b_addDelayToSelected = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -51,15 +56,15 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.listBox_keys.FormattingEnabled = true;
-            this.listBox_keys.Location = new System.Drawing.Point(15, 77);
+            this.listBox_keys.Location = new System.Drawing.Point(15, 103);
             this.listBox_keys.Name = "listBox_keys";
-            this.listBox_keys.Size = new System.Drawing.Size(449, 134);
+            this.listBox_keys.Size = new System.Drawing.Size(449, 160);
             this.listBox_keys.TabIndex = 2;
             // 
             // b_moveUp
             // 
             this.b_moveUp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.b_moveUp.Location = new System.Drawing.Point(470, 77);
+            this.b_moveUp.Location = new System.Drawing.Point(471, 103);
             this.b_moveUp.Name = "b_moveUp";
             this.b_moveUp.Size = new System.Drawing.Size(75, 23);
             this.b_moveUp.TabIndex = 3;
@@ -70,7 +75,7 @@
             // b_moveDown
             // 
             this.b_moveDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.b_moveDown.Location = new System.Drawing.Point(470, 106);
+            this.b_moveDown.Location = new System.Drawing.Point(471, 132);
             this.b_moveDown.Name = "b_moveDown";
             this.b_moveDown.Size = new System.Drawing.Size(75, 23);
             this.b_moveDown.TabIndex = 4;
@@ -81,7 +86,7 @@
             // b_remove
             // 
             this.b_remove.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.b_remove.Location = new System.Drawing.Point(470, 135);
+            this.b_remove.Location = new System.Drawing.Point(470, 161);
             this.b_remove.Name = "b_remove";
             this.b_remove.Size = new System.Drawing.Size(75, 23);
             this.b_remove.TabIndex = 5;
@@ -92,7 +97,7 @@
             // b_save
             // 
             this.b_save.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.b_save.Location = new System.Drawing.Point(471, 191);
+            this.b_save.Location = new System.Drawing.Point(471, 248);
             this.b_save.Name = "b_save";
             this.b_save.Size = new System.Drawing.Size(75, 23);
             this.b_save.TabIndex = 6;
@@ -115,34 +120,86 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(12, 42);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(207, 13);
+            this.label2.Size = new System.Drawing.Size(100, 13);
             this.label2.TabIndex = 8;
-            this.label2.Text = "Alternatively insert text here and click Add:";
+            this.label2.Text = "Add text (e.g. chat):";
             // 
-            // textBox1
+            // tb_addText
             // 
-            this.textBox1.Location = new System.Drawing.Point(225, 39);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(240, 20);
-            this.textBox1.TabIndex = 9;
+            this.tb_addText.Location = new System.Drawing.Point(118, 39);
+            this.tb_addText.Name = "tb_addText";
+            this.tb_addText.Size = new System.Drawing.Size(206, 20);
+            this.tb_addText.TabIndex = 9;
             // 
             // b_addText
             // 
-            this.b_addText.Location = new System.Drawing.Point(471, 37);
+            this.b_addText.Location = new System.Drawing.Point(330, 36);
             this.b_addText.Name = "b_addText";
             this.b_addText.Size = new System.Drawing.Size(75, 23);
             this.b_addText.TabIndex = 10;
-            this.b_addText.Text = "Add";
+            this.b_addText.Text = "Add Text";
             this.b_addText.UseVisualStyleBackColor = true;
             this.b_addText.Click += new System.EventHandler(this.b_addText_Click);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(12, 69);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(160, 13);
+            this.label3.TabIndex = 11;
+            this.label3.Text = "Add delay between key presses:";
+            // 
+            // tb_addDelay
+            // 
+            this.tb_addDelay.Location = new System.Drawing.Point(178, 66);
+            this.tb_addDelay.Name = "tb_addDelay";
+            this.tb_addDelay.Size = new System.Drawing.Size(286, 20);
+            this.tb_addDelay.TabIndex = 12;
+            this.tb_addDelay.Text = "10";
+            // 
+            // b_addDelay
+            // 
+            this.b_addDelay.Location = new System.Drawing.Point(471, 63);
+            this.b_addDelay.Name = "b_addDelay";
+            this.b_addDelay.Size = new System.Drawing.Size(75, 23);
+            this.b_addDelay.TabIndex = 13;
+            this.b_addDelay.Text = "Add delay";
+            this.b_addDelay.UseVisualStyleBackColor = true;
+            this.b_addDelay.Click += new System.EventHandler(this.b_addDelay_Click);
+            // 
+            // b_addTextWithDelay
+            // 
+            this.b_addTextWithDelay.Location = new System.Drawing.Point(411, 36);
+            this.b_addTextWithDelay.Name = "b_addTextWithDelay";
+            this.b_addTextWithDelay.Size = new System.Drawing.Size(134, 23);
+            this.b_addTextWithDelay.TabIndex = 14;
+            this.b_addTextWithDelay.Text = "Add Text with delay";
+            this.b_addTextWithDelay.UseVisualStyleBackColor = true;
+            this.b_addTextWithDelay.Click += new System.EventHandler(this.b_addTextWithDelay_Click);
+            // 
+            // b_addDelayToSelected
+            // 
+            this.b_addDelayToSelected.Location = new System.Drawing.Point(470, 201);
+            this.b_addDelayToSelected.Name = "b_addDelayToSelected";
+            this.b_addDelayToSelected.Size = new System.Drawing.Size(75, 23);
+            this.b_addDelayToSelected.TabIndex = 15;
+            this.b_addDelayToSelected.Text = "Set Delay";
+            this.b_addDelayToSelected.UseVisualStyleBackColor = true;
+            this.b_addDelayToSelected.Click += new System.EventHandler(this.b_addDelayToSelected_Click);
             // 
             // EditSequence
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(558, 226);
+            this.ClientSize = new System.Drawing.Size(558, 283);
+            this.Controls.Add(this.b_addDelayToSelected);
+            this.Controls.Add(this.b_addTextWithDelay);
+            this.Controls.Add(this.b_addDelay);
+            this.Controls.Add(this.tb_addDelay);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.b_addText);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.tb_addText);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.b_edit_keyEdit);
             this.Controls.Add(this.b_save);
@@ -168,7 +225,12 @@
         private System.Windows.Forms.Button b_save;
         private System.Windows.Forms.Button b_edit_keyEdit;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox tb_addText;
         private System.Windows.Forms.Button b_addText;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox tb_addDelay;
+        private System.Windows.Forms.Button b_addDelay;
+        private System.Windows.Forms.Button b_addTextWithDelay;
+        private System.Windows.Forms.Button b_addDelayToSelected;
     }
 }

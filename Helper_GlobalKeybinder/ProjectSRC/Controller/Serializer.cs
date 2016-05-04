@@ -68,14 +68,12 @@ namespace Helper_GlobalKeybinder.ProjectSRC.Controller {
         /// </summary>
         /// <returns>The loaded model, or null if loading failed</returns>
         public GUIModel Deserialize() {
-            try {
-                XmlSerializer serializer = new XmlSerializer(typeof(GUIModel));
-                if(!File.Exists(SAVE_PATH)) return null;
-                FileStream fs = new FileStream(SAVE_PATH, FileMode.Open);
-                GUIModel obj = (GUIModel)serializer.Deserialize(fs);
-                fs.Close();
-                return obj;
-            } catch(Exception) { return null; }
+            XmlSerializer serializer = new XmlSerializer(typeof(GUIModel));
+            if(!File.Exists(SAVE_PATH)) return null;
+            FileStream fs = new FileStream(SAVE_PATH, FileMode.Open);
+            GUIModel obj = (GUIModel)serializer.Deserialize(fs);
+            fs.Close();
+            return obj;
         }
     }
 }
