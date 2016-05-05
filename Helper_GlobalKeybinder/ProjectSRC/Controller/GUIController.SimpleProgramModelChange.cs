@@ -16,7 +16,7 @@ namespace Helper_GlobalKeybinder.ProjectSRC.Controller {
             ComboBox cbox = (ComboBox)sender;
             string text = cbox.Text;
             foreach(ProgramProfile program in Model.Programs) {
-                if(text == program.Name) {
+                if(text == program.ToString()) {
                     Model.CurSelectedProgramProfile = program;
                     Model.CurExeName = program.Name;
                     break;
@@ -99,8 +99,17 @@ namespace Helper_GlobalKeybinder.ProjectSRC.Controller {
         /// <param name="sender">The sender that fired this method</param>
         /// <param name="e">The arguments the sender specified</param>
         public void DeleteProcessConfig(object sender, EventArgs e) {
-            Model.Programs.Remove(Model.CurSelectedProgramProfile); //TODO: Reset all textboxes / data
+            Model.Programs.Remove(Model.CurSelectedProgramProfile);
+            ResetKBData();
+            View.UpdateViewKeybindFieldsFromModelKeybindFields(Model);
+            View.UpdateKeybindListViewItems(Model);
             View.UpdateView(Model);
+        }
+
+        private void ResetKBData() {
+            Model.CurKBInput = null;
+            Model.CurKBName = "";
+            Model.CurKBOutput = null;
         }
 
         public void SingleSendChanged(object sender, EventArgs e) {

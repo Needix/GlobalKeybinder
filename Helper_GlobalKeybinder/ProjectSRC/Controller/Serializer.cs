@@ -71,7 +71,10 @@ namespace Helper_GlobalKeybinder.ProjectSRC.Controller {
             XmlSerializer serializer = new XmlSerializer(typeof(GUIModel));
             if(!File.Exists(SAVE_PATH)) return null;
             FileStream fs = new FileStream(SAVE_PATH, FileMode.Open);
-            GUIModel obj = (GUIModel)serializer.Deserialize(fs);
+            GUIModel obj = null;
+            try {
+                obj = (GUIModel)serializer.Deserialize(fs);
+            } catch(InvalidOperationException) { }
             fs.Close();
             return obj;
         }

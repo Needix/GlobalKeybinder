@@ -35,16 +35,6 @@ namespace Helper_GlobalKeybinder.ProjectSRC.Controller {
             Keybinder.StartHook();
         }
         
-        public void PrintAllKeybinds() {
-            foreach (ProgramProfile programProfile in Model.Programs) {
-                Debug.WriteLine("Printing "+programProfile);
-                foreach (Keybind keybind in programProfile.Keybinds) {
-                    Debug.WriteLine(keybind.InputSequence.Key+" / "+keybind.InputSequence.Modifier);
-                    Debug.WriteLine(keybind);
-                }
-            }
-        }
-
         public void Close() {
             Keybinder.Close();
         }

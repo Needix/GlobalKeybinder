@@ -15,20 +15,17 @@ namespace Helper_GlobalKeybinder.ProjectSRC.Controller {
     public class Keybinder {
         //Get Active Window
         [DllImport("user32.dll")]
-        static extern IntPtr GetForegroundWindow();
+        public static extern IntPtr GetWindowThreadProcessId(IntPtr hWnd, out uint ProcessId);
 
         [DllImport("user32.dll")]
-        static extern int GetWindowText(IntPtr hWnd, StringBuilder text, int count);
+        private static extern IntPtr GetForegroundWindow();
 
-        public static string GetActiveWindowTitle() {
-            const int nChars = 256;
-            StringBuilder Buff = new StringBuilder(nChars);
-            IntPtr handle = GetForegroundWindow();
-
-            if (GetWindowText(handle, Buff, nChars) > 0) {
-                return Buff.ToString();
-            }
-            return null;
+        public static string GetActiveProcessFileName() {
+            IntPtr hwnd = GetForegroundWindow();
+            uint pid;
+            GetWindowThreadProcessId(hwnd, out pid);
+            Process p = Process.GetProcessById((int)pid);
+            return p.MainModule.ModuleName;
         }
 
         //ReadInput
@@ -104,8 +101,13 @@ namespace Helper_GlobalKeybinder.ProjectSRC.Controller {
                     foreach (Keybind keybind in program.Keybinds) {
                         if (!keybind.Enabled) continue;
                         GlobalHotkey globalHotkey = keybind.InputSequence;
-                        if (!globalHotkey.Matches(GlobalHotkey.GetVKFromChar((char) pressedKey), mods) ||
-                            Environment.TickCount - globalHotkey.LastSend < GlobalHotkey.TimeBetweenSend) continue;
+                        string processName = GetActiveProcessFileName();
+                        string processNameShort = processName.Substring(0, processName.LastIndexOf('.'));
+                        if (!globalHotkey.Matches(GlobalHotkey.GetVKFromChar((char) pressedKey), mods) || //Doesnt matched searched keybind
+                            Environment.TickCount - globalHotkey.LastSend < GlobalHotkey.TimeBetweenSend ||  //Or was already executed in last (TimeBetweenSend) milliseconds
+                            processNameShort != program.Name
+                            )
+                                continue;
 
                         Debug.WriteLine("Matched! Sending...");
                         new Thread((ThreadStart) delegate {

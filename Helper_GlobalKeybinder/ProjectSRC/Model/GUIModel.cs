@@ -39,7 +39,8 @@ namespace Helper_GlobalKeybinder.ProjectSRC.Model {
         }
 
         public Keybind CreateKeyBindFromData() {
-            return new Keybind(CurKBName, CurKBInput, CurKBOutput);
+            if (string.IsNullOrEmpty(CurExeName) || CurKBInput == null || CurKBOutput == null || CurSelectedProgramProfile == null) return null;
+            return new Keybind(CurSelectedProgramProfile.GetFirstFreeId(), CurKBName, CurKBInput, CurKBOutput);
         }
 
         public ProgramProfile CreateProgramFromData() {

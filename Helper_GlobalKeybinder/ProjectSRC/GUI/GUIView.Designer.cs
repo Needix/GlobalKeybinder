@@ -32,10 +32,12 @@ namespace Helper_GlobalKeybinder.ProjectSRC.GUI {
             this.b_select_addNew = new System.Windows.Forms.Button();
             this.b_select_delete = new System.Windows.Forms.Button();
             this.listView_edit_keybinds = new System.Windows.Forms.ListView();
+            this.columnHeader0 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cbox_config_singleSend = new System.Windows.Forms.CheckBox();
             this.b_select_save = new System.Windows.Forms.Button();
             this.checkBox_select_enabled = new System.Windows.Forms.CheckBox();
             this.b_select_selectProcess = new System.Windows.Forms.Button();
@@ -54,7 +56,6 @@ namespace Helper_GlobalKeybinder.ProjectSRC.GUI {
             this.b_edit_addNew = new System.Windows.Forms.Button();
             this.b_edit_deleteSelected = new System.Windows.Forms.Button();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.cbox_config_singleSend = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -96,10 +97,12 @@ namespace Helper_GlobalKeybinder.ProjectSRC.GUI {
             | System.Windows.Forms.AnchorStyles.Right)));
             this.listView_edit_keybinds.CheckBoxes = true;
             this.listView_edit_keybinds.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader0,
             this.columnHeader1,
             this.columnHeader2,
             this.columnHeader3});
             this.listView_edit_keybinds.FullRowSelect = true;
+            this.listView_edit_keybinds.HideSelection = false;
             this.listView_edit_keybinds.Location = new System.Drawing.Point(6, 19);
             this.listView_edit_keybinds.MultiSelect = false;
             this.listView_edit_keybinds.Name = "listView_edit_keybinds";
@@ -107,6 +110,10 @@ namespace Helper_GlobalKeybinder.ProjectSRC.GUI {
             this.listView_edit_keybinds.TabIndex = 3;
             this.listView_edit_keybinds.UseCompatibleStateImageBehavior = false;
             this.listView_edit_keybinds.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader0
+            // 
+            this.columnHeader0.Text = "ID";
             // 
             // columnHeader1
             // 
@@ -141,6 +148,16 @@ namespace Helper_GlobalKeybinder.ProjectSRC.GUI {
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Config select";
+            // 
+            // cbox_config_singleSend
+            // 
+            this.cbox_config_singleSend.AutoSize = true;
+            this.cbox_config_singleSend.Location = new System.Drawing.Point(121, 73);
+            this.cbox_config_singleSend.Name = "cbox_config_singleSend";
+            this.cbox_config_singleSend.Size = new System.Drawing.Size(330, 17);
+            this.cbox_config_singleSend.TabIndex = 8;
+            this.cbox_config_singleSend.Text = "Use single send method (check this if game recieves keys twice)";
+            this.cbox_config_singleSend.UseVisualStyleBackColor = true;
             // 
             // b_select_save
             // 
@@ -232,7 +249,7 @@ namespace Helper_GlobalKeybinder.ProjectSRC.GUI {
             this.b_edit_configKey.Name = "b_edit_configKey";
             this.b_edit_configKey.Size = new System.Drawing.Size(122, 21);
             this.b_edit_configKey.TabIndex = 14;
-            this.b_edit_configKey.Text = "Configure Key...";
+            this.b_edit_configKey.Text = "Configure KeyboardKey...";
             this.b_edit_configKey.UseVisualStyleBackColor = true;
             // 
             // tb_edit_kbSequence
@@ -329,16 +346,6 @@ namespace Helper_GlobalKeybinder.ProjectSRC.GUI {
             this.toolTip.InitialDelay = 0;
             this.toolTip.ReshowDelay = 100;
             // 
-            // cbox_config_singleSend
-            // 
-            this.cbox_config_singleSend.AutoSize = true;
-            this.cbox_config_singleSend.Location = new System.Drawing.Point(121, 73);
-            this.cbox_config_singleSend.Name = "cbox_config_singleSend";
-            this.cbox_config_singleSend.Size = new System.Drawing.Size(330, 17);
-            this.cbox_config_singleSend.TabIndex = 8;
-            this.cbox_config_singleSend.Text = "Use single send method (check this if game recieves keys twice)";
-            this.cbox_config_singleSend.UseVisualStyleBackColor = true;
-            // 
             // GUIView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -386,5 +393,6 @@ namespace Helper_GlobalKeybinder.ProjectSRC.GUI {
         private Button b_edit_configKey;
         private Button b_edit_sequence;
         private CheckBox cbox_config_singleSend;
+        private ColumnHeader columnHeader0;
     }
 }

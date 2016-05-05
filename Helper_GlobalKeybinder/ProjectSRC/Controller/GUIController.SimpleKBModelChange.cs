@@ -33,8 +33,8 @@ namespace Helper_GlobalKeybinder.ProjectSRC.Controller {
             switch(b.Name) {
                 case "b_edit_addNew":
                     Keybind newBind = Model.CreateKeyBindFromData();
+                    if (newBind == null) return;
                     curProgramProfile.Keybinds.Add(newBind);
-                    newBind.Enabled = true;
                     //newBind.InputSequence.Register();
                     Model.CurSelectedKeybind = newBind;
                     break;
@@ -44,17 +44,18 @@ namespace Helper_GlobalKeybinder.ProjectSRC.Controller {
                     //deleteBind.InputSequence.Unregister();
                     curProgramProfile.Keybinds.Remove(deleteBind);
                     Model.CurSelectedKeybind = null;
+                    ResetKBData();
+                    View.UpdateViewKeybindFieldsFromModelKeybindFields(Model);
                     break;
                 case "b_edit_save":
                     Keybind curKB = Model.CurSelectedKeybind;
-                    Debug.WriteLine("Trying to save "+curKB);
                     if(curKB == null) return;
                     curKB.Name = Model.CurKBName;
                     curKB.InputSequence = Model.CurKBInput;
                     curKB.OutputSequence = Model.CurKBOutput;
                     break;
             }
-            View.UpdateView(Model);
+            View.UpdateKeybindListViewItems(Model);
         }
 
         public void SelectedKBChanged(object sender, EventArgs e) {
@@ -76,15 +77,9 @@ namespace Helper_GlobalKeybinder.ProjectSRC.Controller {
             }
 
             ConfigureKey form = new ConfigureKey();
-            form.ShowDialog();
-            if(!form.Save) return;
+            GlobalHotkey hotkey = form.CreateGlobalHotkeyFromConfigKey();
+            if(hotkey!=null) Model.CurKBInput = hotkey;
 
-            int mod = Constants.NOMOD;
-            if(form.Alt) mod += Constants.ALT;
-            if(form.Control) mod += Constants.CTRL;
-            if(form.Shift) mod += Constants.SHIFT;
-
-            Model.CurKBInput = new GlobalHotkey(mod, form.SelectedChar);
             View.UpdateViewKeybindFieldsFromModelKeybindFields(Model);
         }
 

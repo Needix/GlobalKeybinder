@@ -2,21 +2,52 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Helper_GlobalKeybinder.ProjectSRC.Model;
 
 namespace Helper_GlobalKeybinder.ProjectSRC.GUI {
     public partial class ConfigureKey : Form {
         public char SelectedChar;
+        public string SpecialKey;
+        public bool SaveSpecial;
         public bool Alt;
         public bool Control;
         public bool Shift;
         public bool Save;
+        public int Delay;
 
         public ConfigureKey() {
             InitializeComponent();
+        }
+
+        public GlobalHotkey CreateGlobalHotkeyFromConfigKey() {
+            this.ShowDialog();
+            if (!this.Save) return null;
+
+            int mod = Constants.NOMOD;
+            if (this.Alt) mod += Constants.ALT;
+            if (this.Control) mod += Constants.CTRL;
+            if (this.Shift) mod += Constants.SHIFT;
+
+            string special = this.SpecialKey;
+            char selectedChar = this.SelectedChar;
+            int delay = this.Delay;
+            Debug.WriteLine(this.SaveSpecial);
+            if (!this.SaveSpecial) {
+                 return new GlobalHotkey(mod, selectedChar);
+            } else {
+                GlobalHotkey.SpecialKeyTypes type = GlobalHotkey.SpecialKeyTypes.NotAssigned;
+                if (special == "Left Mouse Button") type = GlobalHotkey.SpecialKeyTypes.LeftMouseButton;
+                if (special == "Right Mouse Button") type = GlobalHotkey.SpecialKeyTypes.RightMouseButton;
+                if (special == "Middle Mouse Button") type = GlobalHotkey.SpecialKeyTypes.MiddleMouseButton;
+                Debug.WriteLine("Creating mouse hotkey");
+                if (type != GlobalHotkey.SpecialKeyTypes.NotAssigned) return new GlobalHotkey(mod, type, delay);
+            }
+            return null;
         }
 
         private void b_cancel_Click(object sender, EventArgs e) {
@@ -35,10 +66,28 @@ namespace Helper_GlobalKeybinder.ProjectSRC.GUI {
         }
 
         private void b_save_Click(object sender, EventArgs e) {
+            SaveAndClose();
+        }
+
+        private void comboBox_special_SelectedIndexChanged(object sender, EventArgs e) {
+            ComboBox cbox = (ComboBox) sender;
+            string selectedItem = (string)cbox.Items[cbox.SelectedIndex];
+            SpecialKey = selectedItem;
+        }
+
+        private void b_save_special_Click(object sender, EventArgs e) {
+            SaveSpecial = true;
+            SaveAndClose();
+        }
+
+        private void SaveAndClose() {
             Alt = cbox_alt.Checked;
             Control = cbox_control.Checked;
             Shift = cbox_shift.Checked;
             Save = true;
+            try {
+                Delay = Convert.ToInt32(tb_delay.Text);
+            } catch(FormatException) { }
             this.Close();
         }
     }

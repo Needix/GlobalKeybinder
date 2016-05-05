@@ -24,9 +24,7 @@ namespace Helper_GlobalKeybinder.ProjectSRC.GUI {
             Instance = this;
             InitializeComponent();
         }
-
-        //TODO: Add "only send if window in focus"
-
+        
         /// <summary>
         /// Used to register all gui events
         /// </summary>
@@ -71,11 +69,9 @@ namespace Helper_GlobalKeybinder.ProjectSRC.GUI {
             _controller = controller;
             RegisterCustomEvents();
         }
-
-        //TODO: Listview not updating on edit change (sequence)test
+        
         //TODO: Add keydown, keyup to view (so user can decide for themselves)
         //TODO: Improve "press key" gui (mouse (special popup?))
-        //TODO: New keybind overrides old ones in list?
 
         /// <summary>
         /// Updates all visuals in the gui
@@ -103,7 +99,7 @@ namespace Helper_GlobalKeybinder.ProjectSRC.GUI {
         /// <param name="model">The GUIModel to use</param>
         public void UpdateProgramComboboxSelection(GUIModel model) {
             foreach(object item in comboBox_select_programSelect.Items) {
-                if(((ProgramProfile)item).ToString() == model.CurExeName) {
+                if(((ProgramProfile)item).Name == model.CurExeName) {
                     comboBox_select_programSelect.SelectedIndex =
                         comboBox_select_programSelect.FindStringExact(model.CurExeName);
                     return;
@@ -121,7 +117,9 @@ namespace Helper_GlobalKeybinder.ProjectSRC.GUI {
         public void UpdateViewKeybindFieldsFromModelKeybindFields(GUIModel model) {
             tb_edit_kbName.Text = model.CurKBName;
             if (model.CurKBInput != null) tb_edit_kbKey.Text = model.CurKBInput.ToString();
-            if(model.CurKBOutput!=null) tb_edit_kbSequence.Text = model.CurKBOutput.ToString();
+            else tb_edit_kbKey.Text = "";
+            if (model.CurKBOutput != null) tb_edit_kbSequence.Text = model.CurKBOutput.ToString();
+            else tb_edit_kbSequence.Text = "";
         }
 
         public void UpdateViewKeybindFieldsFromSelectedKeybind(GUIModel model) { 
@@ -131,20 +129,36 @@ namespace Helper_GlobalKeybinder.ProjectSRC.GUI {
             tb_edit_kbSequence.Text = model.CurSelectedKeybind.OutputSequence.ToString();
         }
         public void UpdateKeybindListViewItems(GUIModel model) {
+            ListView.SelectedIndexCollection col = listView_edit_keybinds.SelectedIndices;
+            ListViewItem selectedItem = null;
+            if (col.Count > 0) selectedItem = listView_edit_keybinds.Items[col[0]];
             listView_edit_keybinds.Items.Clear();
 
             if(model.CurSelectedProgramProfile != null) {
                 foreach(Keybind keybind in model.CurSelectedProgramProfile.Keybinds) {
-                    listView_edit_keybinds.Items.Add(keybind.Name)
+                    listView_edit_keybinds.Items.Add(keybind.ID+"")
                     .SubItems.AddRange( 
                         new[] {
+                            keybind.Name,
                             keybind.InputSequence.ToString(),
                             keybind.OutputSequence.ToString()
                         }
                     );
                     listView_edit_keybinds.Items[listView_edit_keybinds.Items.Count - 1].Checked = keybind.Enabled;
                 }
-                if(listView_edit_keybinds.Items.Count != 0) listView_edit_keybinds.Columns[0].Width = -1; //TODO: Is this really good?
+                if(listView_edit_keybinds.Items.Count != 0) listView_edit_keybinds.Columns[1].Width = -1;
+            }
+
+            if (selectedItem != null) {
+                Debug.WriteLine("Searching selected item: "+selectedItem);
+                for (int i = 0; i < listView_edit_keybinds.Items.Count; i++) {
+                    ListViewItem curItem = listView_edit_keybinds.Items[i];
+                    if (curItem.Text == selectedItem.Text) {
+                        Debug.WriteLine("Matched ID: "+curItem.Text);
+                        listView_edit_keybinds.SelectedIndices.Add(i);
+                        break;
+                    }
+                }
             }
         }
         

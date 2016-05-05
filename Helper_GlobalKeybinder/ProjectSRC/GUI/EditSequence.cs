@@ -68,10 +68,9 @@ namespace Helper_GlobalKeybinder.ProjectSRC.GUI {
 
         private void b_edit_keyEdit_Click(object sender, EventArgs e) {
             ConfigureKey key = new ConfigureKey();
-            key.ShowDialog();
-            if(!key.Save) return;
+            GlobalHotkey hotkey = key.CreateGlobalHotkeyFromConfigKey();
 
-            GlobalHotkey hotkey = new GlobalHotkey(GlobalHotkey.CalcModifier(key.Shift, key.Alt, key.Control), key.SelectedChar);
+            if (hotkey == null) return;
             SendKeys.Add(hotkey);
             listBox_keys.Items.Add(hotkey);
         }
@@ -101,7 +100,7 @@ namespace Helper_GlobalKeybinder.ProjectSRC.GUI {
 
         private int GetDelay() {
             try {
-                int delay = Convert.ToInt32(tb_addDelay.Text);
+                int delay = Convert.ToInt32(tb_delay.Text);
                 if (delay < -1) delay = -1;
                 return delay;
             }
@@ -111,7 +110,9 @@ namespace Helper_GlobalKeybinder.ProjectSRC.GUI {
         }
 
         private void b_addDelayToSelected_Click(object sender, EventArgs e) {
-            ((GlobalHotkey) listBox_keys.Items[listBox_keys.SelectedIndex]).Delay = GetDelay();
+            int delay = GetDelay();
+            if (delay == -1) return;
+            ((GlobalHotkey) listBox_keys.Items[listBox_keys.SelectedIndex]).Delay = delay;
             listBox_keys.Items.Clear();
             foreach (GlobalHotkey hotkey in SendKeys) {
                 listBox_keys.Items.Add(hotkey);

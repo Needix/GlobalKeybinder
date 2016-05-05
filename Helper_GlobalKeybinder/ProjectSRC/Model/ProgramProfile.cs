@@ -21,8 +21,31 @@ namespace Helper_GlobalKeybinder.ProjectSRC.Model {
             Keybinds = new List<Keybind>();
         }
 
+        /// <summary>
+        /// Shows the program profile in this style: 
+        ///     Enabled: "Name"
+        ///     Disabled: "Name + (Disabled)"
+        /// </summary>
+        /// <returns>The a program profile string as displayed in the description</returns>
         public override string ToString() {
-            return $"{Name}";
+            return Name + (!Enabled ? " (Disabled)" : "");
+        }
+
+        public int GetFirstFreeId() {
+            int curID = 0;
+            int freeId = -1;
+            while (freeId == -1) {
+                bool found = false;
+                foreach (Keybind keybind in Keybinds) {
+                    if (keybind.ID == curID) {
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) freeId = curID;
+                else curID++;
+            }
+            return freeId;
         }
     }
 }
