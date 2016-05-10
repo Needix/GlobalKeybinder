@@ -1145,6 +1145,10 @@ namespace Helper_GlobalKeybinder.ProjectSRC.Model {
             LeftMouseButton, 
             RightMouseButton,
             MiddleMouseButton,
+            ArrowLeft,
+            ArrowDown,
+            ArrowUp,
+            ArrowRight,
         }
 
         [DllImport("user32.dll")]
@@ -1173,7 +1177,7 @@ namespace Helper_GlobalKeybinder.ProjectSRC.Model {
         public List<int> Keys { get; set; } //THE VK_ bytes of the Text
         public string Text { get; set; }
 
-        public int Delay { get; set; }
+        public int Delay { get; set; } //TODO: Differentiate between "delay to next input" and "delay between up and down"
 
         [XmlIgnore]
         public int LastSend { get; set; }
@@ -1229,13 +1233,21 @@ namespace Helper_GlobalKeybinder.ProjectSRC.Model {
             Delay = -1;
         }
 
-        public GlobalHotkey(int modifier, SpecialKeyTypes specialKey, int delay) :this() {
+        public GlobalHotkey(int modifier, SpecialKeyTypes specialKey, int delay, bool isMouse) :this() {
             this.Modifier = modifier;
-            this.MouseKeyDown = GetMouseDownEnumKeyFromSpecialEnum(specialKey);
-            this.MouseKeyUp = GetMouseUpEnumKeyFromSpecialEnum(specialKey);
-            InputType = InputTypes.MOUSE;
-            KeyType = KeyTypes.IsMouse;
             Delay = delay;
+            if (isMouse) {
+                this.MouseKeyDown = GetMouseDownEnumKeyFromSpecialEnum(specialKey);
+                this.MouseKeyUp = GetMouseUpEnumKeyFromSpecialEnum(specialKey);
+                InputType = InputTypes.MOUSE;
+                KeyType = KeyTypes.IsMouse;
+            }
+            else {
+                this.KeyboardKey = GetVKFromSpecialKeyType(specialKey);
+                KeyType = KeyTypes.IsChar;
+                InputType = InputTypes.KEYBOARD;
+                Debug.WriteLine("Key: "+this.KeyboardKey);
+            }
         }
 
         public GlobalHotkey(GlobalHotkey copy) : this() {
@@ -1281,18 +1293,14 @@ namespace Helper_GlobalKeybinder.ProjectSRC.Model {
 
             foreach(GlobalHotkey c in seq.Sequence) {
                 if(c.KeyType == KeyTypes.IsChar) {
-                    if (c.KeyType == KeyTypes.IsChar) {
-                        byte key = GetVKFromChar((char) c.KeyboardKey);
-                        ModCollection mod = GetModifiers(c.Modifier);
-                        bool shift = mod.ShiftPressed;
-                        bool alt = mod.AltPressed;
-                        bool ctrl = mod.ControlPressed;
-
-                        Debug.WriteLine("Sending \"" + ((char) c.KeyboardKey) + "\" with mods: \"CTRL:" + ctrl +
-                                        " / ALT:" + alt + " / SHIFT:" + shift + "\" to " + exeName);
-                        //TODO: Add/fix mod sending
-                        SendKeyboardKey(key, c, singleSend, shift, alt, ctrl);
-                    }
+                    //byte key = GetVKFromChar((char) c.KeyboardKey);
+                    ModCollection mod = GetModifiers(c.Modifier);
+                    bool shift = mod.ShiftPressed;
+                    bool alt = mod.AltPressed;
+                    bool ctrl = mod.ControlPressed;
+                        
+                    //TODO: Add/fix mod sending
+                    SendKeyboardKey(c.KeyboardKey, c, singleSend, shift, alt, ctrl);
 
                 } else if (c.KeyType == KeyTypes.IsText) {
                     Debug.WriteLine("Sending text: \""+c.Text+"\" to: "+exeName);
@@ -1300,9 +1308,11 @@ namespace Helper_GlobalKeybinder.ProjectSRC.Model {
                         if (c.Delay > 0) Thread.Sleep(c.Delay);
                         SendKeyboardKey(key, c, singleSend, false, false, false);
                     }
+
                 } else if (c.KeyType == KeyTypes.IsMouse) {
                     Debug.WriteLine("Sending mouse key: "+c.MouseKeyDown+" to "+exeName);
                     SendMouseKey(c, singleSend);
+
                 }
                 if (c.Delay > 0) Thread.Sleep(c.Delay);
             }
@@ -1342,26 +1352,54 @@ namespace Helper_GlobalKeybinder.ProjectSRC.Model {
         private void SendKeyboardKey(int key, GlobalHotkey hotkey, bool singleSend, bool shift, bool ctrl, bool alt) {
             ScanCodeShort scanCode = (ScanCodeShort)MapVirtualKey((uint)key, MAPVK_VK_TO_VSC);
             VirtualKeyShort vkey = (VirtualKeyShort)key;
+            bool extended = false;
+            if (vkey == VirtualKeyShort.UP) extended = true;
             Debug.WriteLine("Sending keyboard key "+scanCode+" / "+vkey+" to "+Keybinder.GetActiveProcessFileName());
-            INPUT input1 = new INPUT() {
-                Types = InputTypes.KEYBOARD,
-                U = new InputUnion() {
-                    ki = new KEYBDINPUT() {
-                        wScan = scanCode,
-                        wVk = vkey
+            INPUT input1;
+            INPUT input2;
+            if (extended) {
+                input1 = new INPUT() {
+                    Types = InputTypes.KEYBOARD,
+                    U = new InputUnion() {
+                        ki = new KEYBDINPUT() {
+                            dwFlags = KEYEVENTF.EXTENDEDKEY,
+                            wScan = scanCode,
+                            wVk = vkey
+                        }
                     }
-                }
-            };
-            INPUT input2 = new INPUT() {
-                Types = InputTypes.KEYBOARD,
-                U = new InputUnion() {
-                    ki = new KEYBDINPUT() {
-                        wScan = scanCode,
-                        wVk = vkey,
-                        dwFlags = KEYEVENTF.KEYUP
+                };
+                input2 = new INPUT() {
+                    Types = InputTypes.KEYBOARD,
+                    U = new InputUnion() {
+                        ki = new KEYBDINPUT() {
+                            wScan = scanCode,
+                            wVk = vkey,
+                            dwFlags = KEYEVENTF.KEYUP | KEYEVENTF.EXTENDEDKEY
+                        }
                     }
-                }
-            };
+                };
+            }
+            else {
+                input1 = new INPUT() {
+                    Types = InputTypes.KEYBOARD,
+                    U = new InputUnion() {
+                        ki = new KEYBDINPUT() {
+                            wScan = scanCode,
+                            wVk = vkey
+                        }
+                    }
+                };
+                input2 = new INPUT() {
+                    Types = InputTypes.KEYBOARD,
+                    U = new InputUnion() {
+                        ki = new KEYBDINPUT() {
+                            wScan = scanCode,
+                            wVk = vkey,
+                            dwFlags = KEYEVENTF.KEYUP
+                        }
+                    }
+                };
+            }
             SendInputs(input1, input2, hotkey.Delay, singleSend);
         }
 
@@ -1434,6 +1472,14 @@ namespace Helper_GlobalKeybinder.ProjectSRC.Model {
             return MOUSEEVENTF.ABSOLUTE;
         }
 
+        private int GetVKFromSpecialKeyType(SpecialKeyTypes key) {
+            if (key == SpecialKeyTypes.ArrowDown) return (int)VirtualKeyShort.DOWN;
+            if (key == SpecialKeyTypes.ArrowUp) return (int)VirtualKeyShort.UP;
+            if (key == SpecialKeyTypes.ArrowLeft) return (int)VirtualKeyShort.LEFT;
+            if (key == SpecialKeyTypes.ArrowRight) return (int)VirtualKeyShort.RIGHT;
+            return -1;
+        }
+
         /// <summary>
         /// Formats the InputSequence in this format: (e.g. "CTRL + ALT + B")
         /// </summary>
@@ -1446,9 +1492,7 @@ namespace Helper_GlobalKeybinder.ProjectSRC.Model {
                 if ((Modifier & Constants.CTRL) == Constants.CTRL) resultList.Add("CTRL");
                 if ((Modifier & Constants.ALT) == Constants.ALT) resultList.Add("ALT");
                 if ((Modifier & Constants.SHIFT) == Constants.SHIFT) resultList.Add("SHIFT");
-                Debug.WriteLine("Trying to convert key: "+KeyboardKey+" to string...");
                 string charString = new KeysConverter().ConvertToString(KeyboardKey);
-                Debug.WriteLine("Result is: "+charString);
                 resultList.Add(charString);
                 foreach (string s in resultList) {
                     result += s + " ";

@@ -18,6 +18,13 @@ namespace Helper_GlobalKeybinder.ProjectSRC.GUI {
         }
 
         private void LoadData(OutputSequence sequence) {
+            /*
+            List<GlobalHotkey> newListe = new List<GlobalHotkey>();
+            foreach (GlobalHotkey globalHotkey in sequence.Sequence) {
+                newListe.Add(new GlobalHotkey(globalHotkey));
+            }
+            SendKeys = newListe;
+            */
             SendKeys = sequence.Sequence;
             if (SendKeys == null) return;
             foreach (GlobalHotkey hotkey in SendKeys) {
@@ -90,14 +97,7 @@ namespace Helper_GlobalKeybinder.ProjectSRC.GUI {
             SendKeys.Add(hotkey);
             listBox_keys.Items.Add(hotkey);
         }
-
-        private void b_addDelay_Click(object sender, EventArgs e) {
-            int delay = GetDelay();
-            GlobalHotkey hotkey = new GlobalHotkey(delay);
-            SendKeys.Add(hotkey);
-            listBox_keys.Items.Add(hotkey);
-        }
-
+        
         private int GetDelay() {
             try {
                 int delay = Convert.ToInt32(tb_delay.Text);
@@ -112,11 +112,24 @@ namespace Helper_GlobalKeybinder.ProjectSRC.GUI {
         private void b_addDelayToSelected_Click(object sender, EventArgs e) {
             int delay = GetDelay();
             if (delay == -1) return;
-            ((GlobalHotkey) listBox_keys.Items[listBox_keys.SelectedIndex]).Delay = delay;
+            if (listBox_keys.SelectedIndex == -1) {
+                SendKeys.Add(new GlobalHotkey(delay));
+                ReaddAllItems();
+            } else {
+                ((GlobalHotkey)listBox_keys.Items[listBox_keys.SelectedIndex]).Delay = delay;
+                ReaddAllItems();
+            }
+        }
+
+        private void ReaddAllItems() {
             listBox_keys.Items.Clear();
             foreach (GlobalHotkey hotkey in SendKeys) {
                 listBox_keys.Items.Add(hotkey);
             }
+        }
+
+        private void b_unselect_Click(object sender, EventArgs e) {
+            listBox_keys.SelectedIndices.Clear();
         }
     }
 }

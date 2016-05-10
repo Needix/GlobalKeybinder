@@ -90,7 +90,7 @@ namespace Helper_GlobalKeybinder.ProjectSRC.Controller {
             dialog.ShowDialog();
             if(!dialog.Save) return;
 
-            List<GlobalHotkey> chars = dialog.SendKeys;
+            List<GlobalHotkey> chars = dialog.SendKeys; //TODO: ALL Output sequence still get overriden by new ones (probably same refence)
             Model.CurKBOutput = new OutputSequence(chars);
             View.UpdateViewKeybindFieldsFromModelKeybindFields(Model);
         }

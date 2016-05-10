@@ -40,12 +40,25 @@ namespace Helper_GlobalKeybinder.ProjectSRC.GUI {
             if (!this.SaveSpecial) {
                  return new GlobalHotkey(mod, selectedChar);
             } else {
+                bool mouse = false;
                 GlobalHotkey.SpecialKeyTypes type = GlobalHotkey.SpecialKeyTypes.NotAssigned;
-                if (special == "Left Mouse Button") type = GlobalHotkey.SpecialKeyTypes.LeftMouseButton;
-                if (special == "Right Mouse Button") type = GlobalHotkey.SpecialKeyTypes.RightMouseButton;
-                if (special == "Middle Mouse Button") type = GlobalHotkey.SpecialKeyTypes.MiddleMouseButton;
-                Debug.WriteLine("Creating mouse hotkey");
-                if (type != GlobalHotkey.SpecialKeyTypes.NotAssigned) return new GlobalHotkey(mod, type, delay);
+                if (special == "Left Mouse Button") {
+                    type = GlobalHotkey.SpecialKeyTypes.LeftMouseButton;
+                    mouse = true;
+                }
+                if (special == "Right Mouse Button") {
+                    type = GlobalHotkey.SpecialKeyTypes.RightMouseButton;
+                    mouse = true;
+                }
+                if (special == "Middle Mouse Button") {
+                    type = GlobalHotkey.SpecialKeyTypes.MiddleMouseButton;
+                    mouse = true;
+                }
+                if(special == "Arrow Left") type = GlobalHotkey.SpecialKeyTypes.ArrowLeft;
+                if (special == "Arrow Right") type = GlobalHotkey.SpecialKeyTypes.ArrowRight;
+                if (special == "Arrow Up") type = GlobalHotkey.SpecialKeyTypes.ArrowUp;
+                if (special == "Arrow Down") type = GlobalHotkey.SpecialKeyTypes.ArrowDown;
+                if (type != GlobalHotkey.SpecialKeyTypes.NotAssigned) return new GlobalHotkey(mod, type, delay, mouse);
             }
             return null;
         }

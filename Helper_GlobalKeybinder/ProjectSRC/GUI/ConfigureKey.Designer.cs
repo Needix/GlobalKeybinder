@@ -130,7 +130,11 @@
             this.comboBox_special.Items.AddRange(new object[] {
             "Left Mouse Button",
             "Right Mouse Button",
-            "Middle Mouse Button"});
+            "Middle Mouse Button",
+            "Arrow Up",
+            "Arrow Down",
+            "Arrow Left",
+            "Arrow Right"});
             this.comboBox_special.Location = new System.Drawing.Point(178, 42);
             this.comboBox_special.Name = "comboBox_special";
             this.comboBox_special.Size = new System.Drawing.Size(161, 21);
