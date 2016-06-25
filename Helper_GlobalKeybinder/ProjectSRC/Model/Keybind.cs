@@ -11,7 +11,7 @@ namespace Helper_GlobalKeybinder.ProjectSRC.Model {
         public GlobalHotkey InputSequence { get; set; }
         public OutputSequence OutputSequence { get; set; } //TODO: Split output and "hotkey"
 
-        public Keybind() {}
+        public Keybind() : this(-1, "", new GlobalHotkey(), new OutputSequence()) {}
         public Keybind(int id, string name, GlobalHotkey inputSequence, OutputSequence outputSequence) {
             Name = name;
             InputSequence = inputSequence;
@@ -31,10 +31,9 @@ namespace Helper_GlobalKeybinder.ProjectSRC.Model {
         [XmlArray("Sequence")]
         [XmlArrayItem("SequenceCharacter")]
         public List<GlobalHotkey> Sequence { get; set; }
-        
-        public OutputSequence() { }
+
+        public OutputSequence() : this(new List<GlobalHotkey>()) { }
         public OutputSequence(List<GlobalHotkey> sequence) {
-            if(sequence == null || sequence.Count == 0) throw new InvalidOperationException("Output Sequence was empty!");
             Sequence = sequence;
         }
 
@@ -53,7 +52,7 @@ namespace Helper_GlobalKeybinder.ProjectSRC.Model {
         public override string ToString() {
             string result = "";
             foreach(GlobalHotkey key in Sequence) {
-                result += key + " | \n";
+                result += key + " | "+ Environment.NewLine;
             }
             return result.Trim();
         }

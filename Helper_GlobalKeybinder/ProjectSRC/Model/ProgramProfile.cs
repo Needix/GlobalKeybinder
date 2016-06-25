@@ -12,13 +12,13 @@ namespace Helper_GlobalKeybinder.ProjectSRC.Model {
         [XmlArrayItem("Keybind")]
         public List<Keybind> Keybinds { get; set; }
 
-        public ProgramProfile() { }
-        public ProgramProfile(string name) {
-            Name = name;
+        public ProgramProfile() {
+            Keybinds = new List<Keybind>();
             Enabled = true;
             SingleSend = false;
-
-            Keybinds = new List<Keybind>();
+        }
+        public ProgramProfile(string name) : this() {
+            Name = name;
         }
 
         /// <summary>
@@ -28,7 +28,7 @@ namespace Helper_GlobalKeybinder.ProjectSRC.Model {
         /// </summary>
         /// <returns>The a program profile string as displayed in the description</returns>
         public override string ToString() {
-            return Name + (!Enabled ? " (Disabled)" : "");
+            return Name + (!Enabled ? " (Disabled)" : " (Enabled)");
         }
 
         public int GetFirstFreeId() {

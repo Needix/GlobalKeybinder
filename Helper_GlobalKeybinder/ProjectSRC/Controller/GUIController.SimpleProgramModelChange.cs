@@ -18,13 +18,13 @@ namespace Helper_GlobalKeybinder.ProjectSRC.Controller {
             foreach(ProgramProfile program in Model.Programs) {
                 if(text == program.ToString()) {
                     Model.CurSelectedProgramProfile = program;
-                    Model.CurExeName = program.Name;
+                    //Model.CurExeName = program.Name;
                     break;
                 }
             }
-            View.UpdateProgramProfileFields(Model);
+            //View.UpdateProgramProfileFields(Model);
             View.UpdateKeybindListViewItems(Model);
-            View.UpdateProgramComboboxSelection(Model);
+            //View.UpdateProgramComboboxSelection(Model);
             //View.UpdateView(Model);
         }
         /// <summary>
@@ -36,31 +36,6 @@ namespace Helper_GlobalKeybinder.ProjectSRC.Controller {
             //Model.CurExeEnabled = ((CheckBox)sender).Checked;
             if (Model.CurSelectedProgramProfile == null) return;
             Model.CurSelectedProgramProfile.Enabled = ((CheckBox) sender).Checked;
-            //View.UpdateView(Model);
-        }
-        /// <summary>
-        /// Called when the "ExecutableName" textfield was changed
-        /// </summary>
-        /// <param name="sender">The textfield</param>
-        /// <param name="e">The arguments</param>
-        public void ProgramExeChanged(object sender, EventArgs e) {
-            Model.CurExeName = ((TextBox)sender).Text;
-            //View.UpdateView(Model);
-        }
-
-        /// <summary>
-        /// Opens the "ChooseProcess" dialog (modal)
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        public void OpenChooseProcessModalDialog(object sender, EventArgs e) {
-            SelectProcess selectProcessDialog = new SelectProcess();
-            selectProcessDialog.ShowDialog();
-            if(selectProcessDialog.SelectedProcess == null) return;
-
-            string selectedProcessName = selectProcessDialog.SelectedProcess.Name;
-            Model.CurExeName = selectedProcessName;
-            View.UpdateProgramProfileFields(Model);
             //View.UpdateView(Model);
         }
 

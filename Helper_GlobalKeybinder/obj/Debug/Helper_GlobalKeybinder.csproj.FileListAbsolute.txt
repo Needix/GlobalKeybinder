@@ -27,3 +27,5 @@ R:\Eigene Dokumente\Visual Studio 2015\Projects\1_Helper\Helper_GlobalKeybinder\
 R:\Eigene Dokumente\Visual Studio 2015\Projects\1_Helper\Helper_GlobalKeybinder\Helper_GlobalKeybinder\obj\Debug\Helper_GlobalKeybinder.ProjectSRC.GUI.SelectProcess.resources
 R:\Eigene Dokumente\Visual Studio 2015\Projects\1_Helper\Helper_GlobalKeybinder\Helper_GlobalKeybinder\obj\Debug\Helper_GlobalKeybinder.Properties.Resources.resources
 R:\Eigene Dokumente\Visual Studio 2015\Projects\1_Helper\Helper_GlobalKeybinder\Helper_GlobalKeybinder\obj\Debug\Helper_GlobalKeybinder.csproj.GenerateResource.Cache
+R:\Eigene Dokumente\Visual Studio 2015\Projects\1_Helper\Helper_GlobalKeybinder\Helper_GlobalKeybinder\obj\Debug\Helper_GlobalKeybinder.ProjectSRC.GUI.CreateKeybind.resources
+R:\Eigene Dokumente\Visual Studio 2015\Projects\1_Helper\Helper_GlobalKeybinder\Helper_GlobalKeybinder\obj\Debug\Helper_GlobalKeybinder.ProjectSRC.GUI.CreateNewConfig.resources

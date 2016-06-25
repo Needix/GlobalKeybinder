@@ -32,33 +32,19 @@ namespace Helper_GlobalKeybinder.ProjectSRC.GUI {
             this.Closing += CloseForm;
             this.Closing += _controller.Serializer.Save;
 
-            b_select_selectProcess.Click += _controller.OpenChooseProcessModalDialog;
-            b_edit_configKey.Click += _controller.OpenConfigKeyModalDialog;
-            b_select_addNew.Click += _controller.AddNewProcessConfig;
-            b_select_save.Click += _controller.SaveProcessConfig;
-            b_select_delete.Click += _controller.DeleteProcessConfig;
-            tb_select_exe.TextChanged += _controller.ProgramExeChanged;
-            comboBox_select_programSelect.SelectedIndexChanged += _controller.SelectedProgramChanged;
-            checkBox_select_enabled.CheckedChanged += _controller.ProgramEnabledChanged;
-            cbox_config_singleSend.CheckedChanged += _controller.SingleSendChanged;
+            b_select_createNew.Click += _controller.FormMainButtonControl;
+            b_select_delete.Click += _controller.FormMainButtonControl;
+            b_select_edit.Click += _controller.FormMainButtonControl;
+            b_select_unselect.Click += _controller.FormMainButtonControl;
+            b_edit_addNew.Click += _controller.FormMainButtonControl;
+            b_edit_deleteSelected.Click += _controller.FormMainButtonControl;
+            b_edit_edit.Click += _controller.FormMainButtonControl;
+            b_edit_unselect.Click += _controller.FormMainButtonControl;
 
-            tb_edit_kbName.TextChanged += _controller.KBTextChanged;
-            tb_edit_kbKey.TextChanged += _controller.KBTextChanged;
-            tb_edit_kbSequence.TextChanged += _controller.KBTextChanged;
-            listView_edit_keybinds.SelectedIndexChanged += _controller.SelectedKBChanged;
+            listBox_profiles.SelectedIndexChanged += _controller.ProfilesSelectedIndexChanged;
+            listView_edit_keybinds.SelectedIndexChanged += _controller.SelectedKeyBindChanged;
             listView_edit_keybinds.ColumnWidthChanged += ListViewKBColumnWidthChanged;
-            listView_edit_keybinds.ItemChecked += _controller.KB_LV_ItemChecked;
-            b_edit_sequence.Click += _controller.OpenConfigSequenceModalDialog;
-            b_edit_deleteSelected.Click += _controller.KBButtonClick;
-            b_edit_save.Click += _controller.KBButtonClick;
-            b_edit_addNew.Click += _controller.KBButtonClick;
-        }
-
-        private const int _minimumColumnWidth = 50;
-        public void ListViewKBColumnWidthChanged(object sender, ColumnWidthChangedEventArgs e) {
-            if(listView_edit_keybinds.Columns[e.ColumnIndex].Width < _minimumColumnWidth) {
-                listView_edit_keybinds.Columns[e.ColumnIndex].Width = _minimumColumnWidth;
-            }
+            listView_edit_keybinds.ItemChecked += _controller.KeyBind_ListView_ItemChecked;
         }
 
         /// <summary>
@@ -78,57 +64,20 @@ namespace Helper_GlobalKeybinder.ProjectSRC.GUI {
         /// </summary>
         /// <param name="model">The GUIModel to use</param>
         public void UpdateView(GUIModel model) {
-            UpdateProgramProfileListItems(model);
-            
-            UpdateProgramProfileFields(model);
-            
-            UpdateKeybindListViewItems(model);
+            UpdateProgramProfile(model);
+            UpdateKeybinds(model);
+            _controller.Save();
         }
 
-        public void UpdateProgramProfileListItems(GUIModel model) {
-            object selectedComboBoxEntry = comboBox_select_programSelect.SelectedItem;
-            comboBox_select_programSelect.Items.Clear();
-            foreach(ProgramProfile program in model.Programs) {
-                comboBox_select_programSelect.Items.Add(program);
+        public void UpdateProgramProfile(GUIModel model) {
+            listBox_profiles.Items.Clear();
+            foreach (ProgramProfile programProfile in model.Programs) {
+                listBox_profiles.Items.Add(programProfile);
             }
-            comboBox_select_programSelect.SelectedItem = selectedComboBoxEntry;
+            if(model.CurSelectedProgramProfile!=null) listBox_profiles.SelectedIndex = listBox_profiles.Items.IndexOf(model.CurSelectedProgramProfile);
         }
-        /// <summary>
-        /// Automatically tries to select the entry in the combobox with matches CurExeName (useful for automatically selecting newly added element)
-        /// </summary>
-        /// <param name="model">The GUIModel to use</param>
-        public void UpdateProgramComboboxSelection(GUIModel model) {
-            foreach(object item in comboBox_select_programSelect.Items) {
-                if(((ProgramProfile)item).Name == model.CurExeName) {
-                    comboBox_select_programSelect.SelectedIndex =
-                        comboBox_select_programSelect.FindStringExact(model.CurExeName);
-                    return;
-                }
-            }
-        }
-        public void UpdateProgramProfileFields(GUIModel model) {
-            tb_select_exe.Text = model.CurExeName;
-            if (model.CurSelectedProgramProfile != null) {
-                checkBox_select_enabled.Checked = model.CurSelectedProgramProfile.Enabled;
-                cbox_config_singleSend.Checked = model.CurSelectedProgramProfile.SingleSend;
-            }
-        }
-
-        public void UpdateViewKeybindFieldsFromModelKeybindFields(GUIModel model) {
-            tb_edit_kbName.Text = model.CurKBName;
-            if (model.CurKBInput != null) tb_edit_kbKey.Text = model.CurKBInput.ToString();
-            else tb_edit_kbKey.Text = "";
-            if (model.CurKBOutput != null) tb_edit_kbSequence.Text = model.CurKBOutput.ToString();
-            else tb_edit_kbSequence.Text = "";
-        }
-
-        public void UpdateViewKeybindFieldsFromSelectedKeybind(GUIModel model) { 
-            if (model.CurSelectedKeybind == null) return;
-            tb_edit_kbKey.Text = model.CurSelectedKeybind.InputSequence.ToString();
-            tb_edit_kbName.Text = model.CurSelectedKeybind.Name;
-            tb_edit_kbSequence.Text = model.CurSelectedKeybind.OutputSequence.ToString();
-        }
-        public void UpdateKeybindListViewItems(GUIModel model) {
+        
+        public void UpdateKeybinds(GUIModel model) {
             ListView.SelectedIndexCollection col = listView_edit_keybinds.SelectedIndices;
             ListViewItem selectedItem = null;
             if (col.Count > 0) selectedItem = listView_edit_keybinds.Items[col[0]];
@@ -150,11 +99,9 @@ namespace Helper_GlobalKeybinder.ProjectSRC.GUI {
             }
 
             if (selectedItem != null) {
-                Debug.WriteLine("Searching selected item: "+selectedItem);
                 for (int i = 0; i < listView_edit_keybinds.Items.Count; i++) {
                     ListViewItem curItem = listView_edit_keybinds.Items[i];
                     if (curItem.Text == selectedItem.Text) {
-                        Debug.WriteLine("Matched ID: "+curItem.Text);
                         listView_edit_keybinds.SelectedIndices.Add(i);
                         break;
                     }
@@ -164,6 +111,13 @@ namespace Helper_GlobalKeybinder.ProjectSRC.GUI {
         
         private void CloseForm(object sender, CancelEventArgs e) {
             _controller.Close();
+        }
+
+        private const int _minimumColumnWidth = 50;
+        public void ListViewKBColumnWidthChanged(object sender, ColumnWidthChangedEventArgs e) {
+            if (listView_edit_keybinds.Columns[e.ColumnIndex].Width < _minimumColumnWidth) {
+                listView_edit_keybinds.Columns[e.ColumnIndex].Width = _minimumColumnWidth;
+            }
         }
     }
 }

@@ -39,6 +39,8 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.b_unselect = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -61,15 +63,15 @@
             this.listBox_keys.FormattingEnabled = true;
             this.listBox_keys.Location = new System.Drawing.Point(11, 19);
             this.listBox_keys.Name = "listBox_keys";
-            this.listBox_keys.Size = new System.Drawing.Size(518, 199);
+            this.listBox_keys.Size = new System.Drawing.Size(500, 199);
             this.listBox_keys.TabIndex = 2;
             // 
             // b_moveUp
             // 
             this.b_moveUp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.b_moveUp.Location = new System.Drawing.Point(534, 19);
+            this.b_moveUp.Location = new System.Drawing.Point(517, 19);
             this.b_moveUp.Name = "b_moveUp";
-            this.b_moveUp.Size = new System.Drawing.Size(172, 23);
+            this.b_moveUp.Size = new System.Drawing.Size(189, 23);
             this.b_moveUp.TabIndex = 3;
             this.b_moveUp.Text = "Move up";
             this.b_moveUp.UseVisualStyleBackColor = true;
@@ -78,9 +80,9 @@
             // b_moveDown
             // 
             this.b_moveDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.b_moveDown.Location = new System.Drawing.Point(534, 48);
+            this.b_moveDown.Location = new System.Drawing.Point(517, 48);
             this.b_moveDown.Name = "b_moveDown";
-            this.b_moveDown.Size = new System.Drawing.Size(171, 23);
+            this.b_moveDown.Size = new System.Drawing.Size(188, 23);
             this.b_moveDown.TabIndex = 4;
             this.b_moveDown.Text = "Move down";
             this.b_moveDown.UseVisualStyleBackColor = true;
@@ -89,9 +91,9 @@
             // b_remove
             // 
             this.b_remove.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.b_remove.Location = new System.Drawing.Point(534, 77);
+            this.b_remove.Location = new System.Drawing.Point(517, 77);
             this.b_remove.Name = "b_remove";
-            this.b_remove.Size = new System.Drawing.Size(171, 23);
+            this.b_remove.Size = new System.Drawing.Size(188, 23);
             this.b_remove.TabIndex = 5;
             this.b_remove.Text = "Remove";
             this.b_remove.UseVisualStyleBackColor = true;
@@ -100,9 +102,9 @@
             // b_save
             // 
             this.b_save.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.b_save.Location = new System.Drawing.Point(535, 198);
+            this.b_save.Location = new System.Drawing.Point(517, 198);
             this.b_save.Name = "b_save";
-            this.b_save.Size = new System.Drawing.Size(171, 23);
+            this.b_save.Size = new System.Drawing.Size(189, 23);
             this.b_save.TabIndex = 6;
             this.b_save.Text = "Save\r\n";
             this.b_save.UseVisualStyleBackColor = true;
@@ -162,9 +164,9 @@
             // b_addDelayToSelected
             // 
             this.b_addDelayToSelected.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.b_addDelayToSelected.Location = new System.Drawing.Point(590, 136);
+            this.b_addDelayToSelected.Location = new System.Drawing.Point(573, 136);
             this.b_addDelayToSelected.Name = "b_addDelayToSelected";
-            this.b_addDelayToSelected.Size = new System.Drawing.Size(111, 23);
+            this.b_addDelayToSelected.Size = new System.Drawing.Size(128, 23);
             this.b_addDelayToSelected.TabIndex = 15;
             this.b_addDelayToSelected.Text = "Add/Set Delay";
             this.b_addDelayToSelected.UseVisualStyleBackColor = true;
@@ -173,13 +175,14 @@
             // tb_delay
             // 
             this.tb_delay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.tb_delay.Location = new System.Drawing.Point(534, 139);
+            this.tb_delay.Location = new System.Drawing.Point(517, 139);
             this.tb_delay.Name = "tb_delay";
             this.tb_delay.Size = new System.Drawing.Size(50, 20);
             this.tb_delay.TabIndex = 16;
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.b_edit_keyEdit);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.label2);
@@ -189,7 +192,7 @@
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(713, 81);
+            this.groupBox1.Size = new System.Drawing.Size(713, 94);
             this.groupBox1.TabIndex = 17;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Adding";
@@ -197,9 +200,9 @@
             // b_unselect
             // 
             this.b_unselect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.b_unselect.Location = new System.Drawing.Point(534, 106);
+            this.b_unselect.Location = new System.Drawing.Point(517, 106);
             this.b_unselect.Name = "b_unselect";
-            this.b_unselect.Size = new System.Drawing.Size(171, 23);
+            this.b_unselect.Size = new System.Drawing.Size(188, 23);
             this.b_unselect.TabIndex = 18;
             this.b_unselect.Text = "Unselect";
             this.b_unselect.UseVisualStyleBackColor = true;
@@ -207,6 +210,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.label3);
             this.groupBox2.Controls.Add(this.listBox_keys);
             this.groupBox2.Controls.Add(this.b_unselect);
             this.groupBox2.Controls.Add(this.b_moveUp);
@@ -216,18 +220,37 @@
             this.groupBox2.Controls.Add(this.b_addDelayToSelected);
             this.groupBox2.Controls.Add(this.b_save);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.groupBox2.Location = new System.Drawing.Point(0, 81);
+            this.groupBox2.Location = new System.Drawing.Point(0, 94);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(713, 234);
             this.groupBox2.TabIndex = 19;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Keys";
             // 
+            // label3
+            // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(514, 162);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(185, 13);
+            this.label3.TabIndex = 19;
+            this.label3.Text = "NOTE: The delay is executed AFTER";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(8, 69);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(295, 13);
+            this.label4.TabIndex = 15;
+            this.label4.Text = "NOTE: The delay for text is put in between EVERY character";
+            // 
             // EditSequence
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(713, 321);
+            this.ClientSize = new System.Drawing.Size(713, 334);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Name = "EditSequence";
@@ -258,5 +281,7 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button b_unselect;
         private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
     }
 }

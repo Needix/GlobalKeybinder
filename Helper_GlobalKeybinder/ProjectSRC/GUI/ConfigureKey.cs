@@ -24,21 +24,15 @@ namespace Helper_GlobalKeybinder.ProjectSRC.GUI {
             InitializeComponent();
         }
 
-        public GlobalHotkey CreateGlobalHotkeyFromConfigKey() {
+        public GlobalHotkey OpenDialogAndCreateGlobalHotkey() {
             this.ShowDialog();
             if (!this.Save) return null;
-
-            int mod = Constants.NOMOD;
-            if (this.Alt) mod += Constants.ALT;
-            if (this.Control) mod += Constants.CTRL;
-            if (this.Shift) mod += Constants.SHIFT;
-
+            
             string special = this.SpecialKey;
             char selectedChar = this.SelectedChar;
             int delay = this.Delay;
-            Debug.WriteLine(this.SaveSpecial);
             if (!this.SaveSpecial) {
-                 return new GlobalHotkey(mod, selectedChar);
+                 return new GlobalHotkey(Char.ToUpper(selectedChar), Alt, Shift, Control);
             } else {
                 bool mouse = false;
                 GlobalHotkey.SpecialKeyTypes type = GlobalHotkey.SpecialKeyTypes.NotAssigned;
@@ -58,7 +52,7 @@ namespace Helper_GlobalKeybinder.ProjectSRC.GUI {
                 if (special == "Arrow Right") type = GlobalHotkey.SpecialKeyTypes.ArrowRight;
                 if (special == "Arrow Up") type = GlobalHotkey.SpecialKeyTypes.ArrowUp;
                 if (special == "Arrow Down") type = GlobalHotkey.SpecialKeyTypes.ArrowDown;
-                if (type != GlobalHotkey.SpecialKeyTypes.NotAssigned) return new GlobalHotkey(mod, type, delay, mouse);
+                if (type != GlobalHotkey.SpecialKeyTypes.NotAssigned) return new GlobalHotkey(type, delay, mouse);
             }
             return null;
         }

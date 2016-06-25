@@ -47,8 +47,6 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="ProjectSRC\Controller\GUIController.cs" />
-    <Compile Include="ProjectSRC\Controller\GUIController.SimpleKBModelChange.cs" />
-    <Compile Include="ProjectSRC\Controller\GUIController.SimpleProgramModelChange.cs" />
     <Compile Include="ProjectSRC\Controller\Keybinder.cs" />
     <Compile Include="ProjectSRC\Controller\Serializer.cs" />
     <Compile Include="ProjectSRC\GUI\ConfigureKey.cs">
@@ -56,6 +54,18 @@
     </Compile>
     <Compile Include="ProjectSRC\GUI\ConfigureKey.Designer.cs">
       <DependentUpon>ConfigureKey.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ProjectSRC\GUI\CreateKeybind.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProjectSRC\GUI\CreateKeybind.Designer.cs">
+      <DependentUpon>CreateKeybind.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ProjectSRC\GUI\CreateNewConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProjectSRC\GUI\CreateNewConfig.Designer.cs">
+      <DependentUpon>CreateNewConfig.cs</DependentUpon>
     </Compile>
     <Compile Include="ProjectSRC\GUI\EditSequence.cs">
       <SubType>Form</SubType>
@@ -79,12 +89,18 @@
     <Compile Include="ProjectSRC\Model\GlobalHotkey.cs" />
     <Compile Include="ProjectSRC\Model\GUIModel.cs" />
     <Compile Include="ProjectSRC\Model\Keybind.cs" />
-    <Compile Include="ProjectSRC\Model\ModCollection.cs" />
     <Compile Include="ProjectSRC\Model\ProgramProfile.cs" />
     <Compile Include="ProjectSRC\Model\SelectProcess\RunningProcess.cs" />
+    <Compile Include="ProjectSRC\Model\VKKeyScanResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="ProjectSRC\GUI\ConfigureKey.resx">
       <DependentUpon>ConfigureKey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProjectSRC\GUI\CreateKeybind.resx">
+      <DependentUpon>CreateKeybind.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProjectSRC\GUI\CreateNewConfig.resx">
+      <DependentUpon>CreateNewConfig.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ProjectSRC\GUI\EditSequence.resx">
       <DependentUpon>EditSequence.cs</DependentUpon>
